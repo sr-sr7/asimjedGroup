@@ -5,10 +5,11 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
 const links = [
-  { label: "الرئيسية", href: "#hero" },
-  { label: "خدماتنا", href: "#services" },
-  { label: "أعمالنا", href: "#portfolio" },
-  { label: "تواصل معنا", href: "#contact" },
+  { label: "الرئيسية", href: "/" },
+  { label: "خدماتنا", href: "/services" },
+  { label: "أعمالنا", href: "/portfolio" },
+  { label: "المدونة", href: "/blog" },
+  { label: "تواصل معنا", href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -31,7 +32,7 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="#hero" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.png" alt="AsiMjed" width={40} height={40} className="rounded-lg" />
           <span
             className="font-orbitron font-black text-lg grad-text"
@@ -42,23 +43,23 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-6">
           {links.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               className="text-sm text-[#8ba3c7] hover:text-[#00d4aa] transition-colors duration-200 font-medium"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             className="px-4 py-2 rounded-xl text-sm font-bold text-[#0d1117] grad-border"
             style={{ background: "linear-gradient(135deg,#00d4aa,#3a7bd5,#7ed957)" }}
           >
             ابدأ مشروعك
-          </a>
+          </Link>
         </nav>
 
         {/* Mobile toggle */}
@@ -74,23 +75,23 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden bg-[#161b22]/95 backdrop-blur-md border-t border-white/5 px-6 py-4 flex flex-col gap-4">
           {links.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
               className="text-[#8ba3c7] hover:text-[#00d4aa] transition-colors font-medium py-1"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             onClick={() => setOpen(false)}
             className="px-4 py-2 rounded-xl text-sm font-bold text-[#0d1117] text-center"
             style={{ background: "linear-gradient(135deg,#00d4aa,#3a7bd5,#7ed957)" }}
           >
             ابدأ مشروعك
-          </a>
+          </Link>
         </div>
       )}
     </header>

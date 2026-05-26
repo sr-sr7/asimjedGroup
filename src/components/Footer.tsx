@@ -1,10 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const links = [
-  { label: "الرئيسية", href: "#hero" },
-  { label: "خدماتنا", href: "#services" },
-  { label: "أعمالنا", href: "#portfolio" },
-  { label: "تواصل معنا", href: "#contact" },
+  { label: "الرئيسية", href: "/" },
+  { label: "خدماتنا", href: "/services" },
+  { label: "أعمالنا", href: "/portfolio" },
+  { label: "المدونة", href: "/blog" },
+  { label: "تواصل معنا", href: "/contact" },
 ];
 
 export default function Footer() {
@@ -29,13 +31,13 @@ export default function Footer() {
           {/* Nav */}
           <nav className="flex flex-wrap gap-6 justify-center">
             {links.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
                 className="text-[#8ba3c7] hover:text-[#00d4aa] text-sm transition-colors"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -52,7 +54,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-white/5 my-8" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-[#8ba3c7] text-xs">
