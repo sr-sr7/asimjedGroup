@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -312,7 +313,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 function renderContent(content: string) {
   const lines = content.trim().split("\n");
-  const elements: React.ReactNode[] = [];
+  const elements: ReactNode[] = [];
   let key = 0;
 
   for (const line of lines) {
