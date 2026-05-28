@@ -20,3 +20,5 @@ dev-output.log
 # claude
 .claude/
 start-dev.bat
+
+.vercel

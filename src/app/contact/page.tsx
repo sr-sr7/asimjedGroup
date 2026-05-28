@@ -1,8 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import Script from "next/script";
 import { Send, Mail, Globe, MessageCircle, Phone, MapPin, Clock } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+declare global {
+  interface Window { grecaptcha: any; }
+}
+
+const RECAPTCHA_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "";
 
 const faqs = [
   { q: "كم يستغرق تطوير الموقع؟", a: "يعتمد على حجم المشروع. موقع بسيط 2-4 أسابيع، وموقع متكامل 6-12 أسبوعاً." },
@@ -15,24 +23,43 @@ export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", budget: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
     try {
+      // احصل على reCAPTCHA token لو المفتاح موجود
+      let recaptchaToken = "";
+      if (RECAPTCHA_KEY && typeof window !== "undefined" && window.grecaptcha) {
+        recaptchaToken = await new Promise<string>((resolve) => {
+          window.grecaptcha.ready(async () => {
+            const token = await window.grecaptcha.execute(RECAPTCHA_KEY, { action: "contact" });
+            resolve(token);
+          });
+        });
+      }
+
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, recaptchaToken }),
       });
       setStatus(res.ok ? "done" : "error");
       if (res.ok) setForm({ name: "", email: "", phone: "", service: "", budget: "", message: "" });
     } catch {
       setStatus("error");
     }
-  };
+  }, [form]);
 
   return (
     <>
+      {/* reCAPTCHA v3 script */}
+      {RECAPTCHA_KEY && (
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_KEY}`}
+          strategy="afterInteractive"
+        />
+      )}
+
       <Navbar />
       <main className="relative z-[1] pt-24 pb-16 px-6">
         {/* Header */}
@@ -158,6 +185,16 @@ export default function ContactPage() {
                 {status === "sending" ? "جاري الإرسال..." : (<>إرسال الطلب <Send size={16} /></>)}
               </button>
             )}
+
+            {/* reCAPTCHA badge notice */}
+            {RECAPTCHA_KEY && (
+              <p className="text-[#4d6080] text-[10px] text-center">
+                محمي بـ Google reCAPTCHA —{" "}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline">سياسة الخصوصية</a>
+                {" & "}
+                <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline">شروط الاستخدام</a>
+              </p>
+            )}
           </form>
 
           {/* Sidebar */}
@@ -186,7 +223,6 @@ export default function ContactPage() {
                 </div>
               );
             })}
-
 
             {/* وثيقة العمل الحر */}
             <div className="bg-[#161b22] border border-[#00d4aa]/20 rounded-2xl p-4 flex items-start gap-3">
