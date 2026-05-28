@@ -4,14 +4,23 @@ import { Send, Mail, Globe, MessageCircle } from "lucide-react";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    await new Promise((r) => setTimeout(r, 1200));
-    setStatus("done");
-    setForm({ name: "", email: "", service: "", message: "" });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, recaptchaToken: "" }),
+      });
+      if (!res.ok) throw new Error("failed");
+      setStatus("done");
+      setForm({ name: "", email: "", service: "", message: "" });
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -99,6 +108,10 @@ export default function Contact() {
             {status === "done" ? (
               <div className="text-center py-3 rounded-xl font-bold text-[#00d4aa] bg-[#00d4aa]/10 border border-[#00d4aa]/20">
                 تم إرسال طلبك بنجاح! سنتواصل معك قريباً ✓
+              </div>
+            ) : status === "error" ? (
+              <div className="text-center py-3 rounded-xl font-bold text-red-400 bg-red-400/10 border border-red-400/20">
+                حدث خطأ، يرجى المحاولة مرة أخرى
               </div>
             ) : (
               <button

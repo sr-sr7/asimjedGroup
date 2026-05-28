@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import AnalyticsScripts from "@/components/Analytics";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import "./globals.css";
 
 const BASE = "https://www.asimjed.com";
@@ -77,6 +78,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnalyticsScripts />
         <Analytics />
         <SpeedInsights />
+
+        {/* ─── WhatsApp Float ─── */}
+        <WhatsAppButton />
       </body>
     </html>
   );
