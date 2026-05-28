@@ -10,7 +10,7 @@ export async function sendContactEmail(data: {
 }) {
   return resend.emails.send({
     from: "AsiMjed Contact <no-reply@asimjed.com>",
-    to: "info@asimjed.com",
+    to: "asimjed2@gmail.com",
     replyTo: data.email,
     subject: `طلب جديد من ${data.name} – ${data.service || "غير محدد"}`,
     html: `
