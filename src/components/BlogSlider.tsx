@@ -1,7 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useRef, useEffect, useCallback, useState } from "react";
-import { ChevronLeft, ChevronRight, Clock, Heart, ExternalLink, ArrowLeft } from "lucide-react";
+import {
+  ChevronLeft, ChevronRight, Clock, Heart,
+  ExternalLink, ArrowLeft, Globe, Loader2,
+} from "lucide-react";
 import Link from "next/link";
 import type { DevArticle } from "@/app/blog/BlogClient";
 
@@ -33,14 +36,25 @@ function getCategory(tags: string[]) {
   return "تطوير المواقع";
 }
 
+/* ─── Types ─────────────────────────────────────────────── */
+type TranslationCache = Record<number, { title: string; description: string }>;
+type TxState = "idle" | "loading" | "ready";
+
 /* ─── Card ──────────────────────────────────────────────── */
-function SlideCard({ article }: { article: DevArticle }) {
+function SlideCard({
+  article,
+  tx,
+}: {
+  article: DevArticle;
+  tx?: { title: string; description: string };
+}) {
   const cat   = getCategory(article.tag_list);
   const color = CAT_COLORS[cat] ?? "#00d4aa";
   const href  = article.canonical_url || article.url;
+  const title = tx?.title       || article.title;
+  const desc  = tx?.description || article.description;
 
   return (
-    /* dir="rtl" so Arabic text stays correct inside the ltr track */
     <a
       href={href}
       target="_blank"
@@ -56,7 +70,7 @@ function SlideCard({ article }: { article: DevArticle }) {
         <div className="h-40 relative overflow-hidden">
           {article.cover_image ? (
             <>
-              <img src={article.cover_image} alt={article.title}
+              <img src={article.cover_image} alt={title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#161b22]/70 to-transparent" />
             </>
@@ -79,12 +93,10 @@ function SlideCard({ article }: { article: DevArticle }) {
         <div className="p-4 flex flex-col gap-2">
           <h3 className="text-[#e6f0ff] font-bold text-sm leading-snug
                          group-hover:text-[#00d4aa] transition-colors line-clamp-2">
-            {article.title}
+            {title}
           </h3>
-          {article.description && (
-            <p className="text-[#6b82a0] text-xs leading-relaxed line-clamp-2">
-              {article.description}
-            </p>
+          {desc && (
+            <p className="text-[#6b82a0] text-xs leading-relaxed line-clamp-2">{desc}</p>
           )}
           <div className="flex items-center justify-between pt-1 mt-auto text-[10px] text-[#4d6080]">
             <span className="flex items-center gap-1.5 max-w-[55%]">
@@ -106,29 +118,26 @@ function SlideCard({ article }: { article: DevArticle }) {
 
 /* ─── Arrow Button ───────────────────────────────────────── */
 function ArrowBtn({
-  onClick, disabled, children, className = "",
+  onClick, disabled, children, side,
 }: {
   onClick: () => void;
   disabled: boolean;
   children: React.ReactNode;
-  className?: string;
+  side: "left" | "right";
 }) {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      aria-hidden={disabled}
       className={`
         absolute top-1/2 -translate-y-1/2 z-20
-        w-11 h-11 rounded-full
-        flex items-center justify-center
-        border backdrop-blur-sm
-        transition-all duration-200
+        w-11 h-11 rounded-full flex items-center justify-center
+        border backdrop-blur-sm transition-all duration-200
+        ${side === "left" ? "left-1" : "right-1"}
         ${disabled
-          ? "border-white/5 bg-[#161b22]/60 text-[#3a5070] cursor-not-allowed opacity-0 pointer-events-none"
+          ? "border-white/5 bg-[#161b22]/60 text-[#3a5070] opacity-0 pointer-events-none"
           : "border-[#00d4aa]/40 bg-[#161b22]/90 text-[#00d4aa] shadow-lg shadow-black/40 hover:bg-[#00d4aa]/15 hover:scale-110 active:scale-95"
         }
-        ${className}
       `}
     >
       {children}
@@ -138,20 +147,26 @@ function ArrowBtn({
 
 /* ─── Main Slider ────────────────────────────────────────── */
 export default function BlogSlider({ articles }: { articles: DevArticle[] }) {
-  const trackRef   = useRef<HTMLDivElement>(null);
-  const isPaused   = useRef(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const isPaused = useRef(false);
+
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
 
-  /* Step = card width (260px) + gap (20px) */
-  const STEP = 280;
+  /* Translation state */
+  const [txState,   setTxState]   = useState<TxState>("idle");
+  const [txActive,  setTxActive]  = useState(false);
+  const [txCache,   setTxCache]   = useState<TranslationCache>({});
 
+  const STEP = 280; // card 260px + gap 20px
+
+  /* ── Navigation ── */
   const navigate = useCallback((dir: "prev" | "next") => {
     const el = trackRef.current;
     if (!el) return;
-    const max    = el.scrollWidth - el.clientWidth;
-    const atEnd  = el.scrollLeft >= max - 10;
-    const atStart= el.scrollLeft <= 10;
+    const max     = el.scrollWidth - el.clientWidth;
+    const atEnd   = el.scrollLeft >= max - 10;
+    const atStart = el.scrollLeft <= 10;
 
     if (dir === "next") {
       atEnd
@@ -172,10 +187,8 @@ export default function BlogSlider({ articles }: { articles: DevArticle[] }) {
     setCanNext(el.scrollLeft < max - 10);
   }, []);
 
-  /* Init nav state after mount */
   useEffect(() => { onScroll(); }, [onScroll]);
 
-  /* Auto-advance every 4s */
   useEffect(() => {
     const id = setInterval(() => {
       if (!isPaused.current) navigate("next");
@@ -183,11 +196,55 @@ export default function BlogSlider({ articles }: { articles: DevArticle[] }) {
     return () => clearInterval(id);
   }, [navigate]);
 
+  /* ── Translation ── */
+  const handleTranslate = useCallback(async () => {
+    // Toggle off if already translated
+    if (txState === "ready") {
+      setTxActive((v) => !v);
+      return;
+    }
+    if (txState === "loading") return;
+
+    setTxState("loading");
+    isPaused.current = true; // pause auto-advance while translating
+
+    try {
+      // Send titles + descriptions interleaved: [t0, d0, t1, d1, ...]
+      const texts = articles.flatMap((a) => [a.title, a.description ?? ""]);
+
+      const res = await fetch("/api/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ texts }),
+      });
+
+      if (!res.ok) throw new Error("API error");
+
+      const { translations } = await res.json() as { translations: string[] };
+
+      const cache: TranslationCache = {};
+      articles.forEach((a, i) => {
+        cache[a.id] = {
+          title:       translations[i * 2]     || a.title,
+          description: translations[i * 2 + 1] || (a.description ?? ""),
+        };
+      });
+
+      setTxCache(cache);
+      setTxState("ready");
+      setTxActive(true);
+    } catch {
+      setTxState("idle"); // allow retry
+    } finally {
+      isPaused.current = false;
+    }
+  }, [articles, txState]);
+
   return (
     <section className="py-16">
 
       {/* ── Header ── */}
-      <div className="max-w-5xl mx-auto px-6 flex items-end justify-between mb-8">
+      <div className="max-w-5xl mx-auto px-6 flex items-end justify-between mb-8 gap-4">
         <div>
           <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-1.5">مقالات</p>
           <h2 className="grad-text font-black leading-tight"
@@ -198,32 +255,54 @@ export default function BlogSlider({ articles }: { articles: DevArticle[] }) {
             أحدث المقالات من مجتمع DEV.to — تتجدد كل ساعة
           </p>
         </div>
-        <Link href="/blog"
-          className="hidden sm:flex items-center gap-1.5 text-xs font-bold px-4 py-2.5 rounded-xl
-                     border border-white/5 bg-[#161b22] text-[#8ba3c7]
-                     hover:text-[#00d4aa] hover:border-[#00d4aa]/30 transition-all duration-200 flex-shrink-0">
-          تصفح الكل
-          <ArrowLeft size={13} />
-        </Link>
+
+        {/* Controls */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+
+          {/* Translate toggle */}
+          <button
+            onClick={handleTranslate}
+            title={txActive ? "عرض النص الأصلي" : "ترجمة للعربي"}
+            className={`flex items-center gap-1.5 text-xs font-bold px-3 py-2.5 rounded-xl border
+                        transition-all duration-200 disabled:cursor-wait
+                        ${txActive
+                          ? "border-[#00d4aa]/40 bg-[#00d4aa]/10 text-[#00d4aa]"
+                          : "border-white/5 bg-[#161b22] text-[#8ba3c7] hover:text-[#00d4aa] hover:border-[#00d4aa]/30"
+                        }`}
+          >
+            {txState === "loading"
+              ? <Loader2 size={13} className="animate-spin" />
+              : <Globe size={13} />
+            }
+            <span className="hidden sm:inline">
+              {txState === "loading" ? "جارٍ الترجمة…" : txActive ? "EN" : "ترجم"}
+            </span>
+          </button>
+
+          {/* All articles */}
+          <Link href="/blog"
+            className="hidden sm:flex items-center gap-1.5 text-xs font-bold px-4 py-2.5 rounded-xl
+                       border border-white/5 bg-[#161b22] text-[#8ba3c7]
+                       hover:text-[#00d4aa] hover:border-[#00d4aa]/30 transition-all duration-200">
+            تصفح الكل
+            <ArrowLeft size={13} />
+          </Link>
+        </div>
       </div>
 
       {/* ── Slider ── */}
-      {/*
-        px-14 (56px each side) = room for the w-11 (44px) arrow + 12px gap before first card
-        dir="ltr" on track = standard scrollLeft (0 → positive) regardless of page RTL
-      */}
       <div className="relative max-w-5xl mx-auto px-14">
 
-        {/* Left gradient fade */}
+        {/* Left fade */}
         <div className="absolute left-0 top-0 bottom-2 w-16 z-10 pointer-events-none
                         bg-gradient-to-r from-[#0d1117] via-[#0d1117]/60 to-transparent" />
 
-        {/* ← Prev arrow */}
-        <ArrowBtn onClick={() => navigate("prev")} disabled={!canPrev} className="left-1">
+        {/* ← Prev */}
+        <ArrowBtn onClick={() => navigate("prev")} disabled={!canPrev} side="left">
           <ChevronRight size={20} />
         </ArrowBtn>
 
-        {/* Scrollable track — dir="ltr" for predictable scroll math */}
+        {/* Track */}
         <div
           ref={trackRef}
           dir="ltr"
@@ -234,26 +313,44 @@ export default function BlogSlider({ articles }: { articles: DevArticle[] }) {
           style={{ scrollbarWidth: "none" }}
         >
           {articles.map((article) => (
-            <SlideCard key={article.id} article={article} />
+            <SlideCard
+              key={article.id}
+              article={article}
+              tx={txActive ? txCache[article.id] : undefined}
+            />
           ))}
         </div>
 
-        {/* Right gradient fade */}
+        {/* Right fade */}
         <div className="absolute right-0 top-0 bottom-2 w-16 z-10 pointer-events-none
                         bg-gradient-to-l from-[#0d1117] via-[#0d1117]/60 to-transparent" />
 
-        {/* → Next arrow */}
-        <ArrowBtn onClick={() => navigate("next")} disabled={!canNext} className="right-1">
+        {/* → Next */}
+        <ArrowBtn onClick={() => navigate("next")} disabled={!canNext} side="right">
           <ChevronLeft size={20} />
         </ArrowBtn>
       </div>
 
-      {/* Mobile all-link */}
-      <div className="sm:hidden text-center mt-6 px-6">
+      {/* Mobile footer */}
+      <div className="sm:hidden flex items-center justify-center gap-4 mt-6 px-6">
+        <button
+          onClick={handleTranslate}
+          className={`flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-xl border
+                      transition-all duration-200
+                      ${txActive
+                        ? "border-[#00d4aa]/40 bg-[#00d4aa]/10 text-[#00d4aa]"
+                        : "border-white/5 bg-[#161b22] text-[#8ba3c7]"
+                      }`}
+        >
+          {txState === "loading"
+            ? <Loader2 size={12} className="animate-spin" />
+            : <Globe size={12} />
+          }
+          {txState === "loading" ? "جارٍ الترجمة…" : txActive ? "إخفاء الترجمة" : "ترجم للعربي"}
+        </button>
         <Link href="/blog"
-          className="inline-flex items-center gap-2 text-sm font-bold text-[#00d4aa] hover:underline">
-          تصفح جميع المقالات
-          <ArrowLeft size={14} />
+          className="flex items-center gap-2 text-sm font-bold text-[#00d4aa] hover:underline">
+          تصفح الكل <ArrowLeft size={14} />
         </Link>
       </div>
 
