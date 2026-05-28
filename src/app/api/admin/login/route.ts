@@ -1,10 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { allow, clientIp } from "@/lib/rateLimit";
 
 export async function POST(req: NextRequest) {
+  // Brute-force protection: 5 attempts per 15 minutes per IP
+  const ip = clientIp(req);
+  if (!allow(ip, "admin-login", 5, 15 * 60 * 1000)) {
+    return NextResponse.json(
+      { error: "تم تجاوز الحد المسموح، حاول بعد 15 دقيقة" },
+      { status: 429 }
+    );
+  }
+
   const { password } = await req.json();
   const adminPassword = process.env.ADMIN_PASSWORD;
-  const adminSecret = process.env.ADMIN_SECRET;
+  const adminSecret   = process.env.ADMIN_SECRET;
 
   if (!adminPassword || !adminSecret) {
     return NextResponse.json({ error: "Admin not configured" }, { status: 500 });

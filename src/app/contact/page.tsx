@@ -202,14 +202,14 @@ export default function ContactPage() {
             {[
               { icon: Globe, label: "الموقع", value: "www.asimjed.com", color: "#00d4aa" },
               { icon: Mail, label: "البريد الإلكتروني", value: "info@asimjed.com", color: "#3a7bd5" },
-              { icon: Phone, label: "الجوال / واتساب", value: "+966 5X XXX XXXX", color: "#7ed957" },
+              { icon: Phone, label: "الجوال / واتساب", value: "+966 591 088 884", color: "#7ed957" },
               { icon: Clock, label: "أوقات العمل", value: "الأحد – الخميس، 9ص – 6م", color: "#00d4aa" },
               { icon: MapPin, label: "الموقع", value: "المملكة العربية السعودية", color: "#3a7bd5" },
-              { icon: MessageCircle, label: "التواصل الاجتماعي", value: "تابعنا على منصاتنا", color: "#7ed957" },
+              { icon: MessageCircle, label: "واتساب", value: "راسلنا مباشرةً الآن", color: "#7ed957", href: "https://wa.me/966591088884" },
             ].map((item) => {
               const Icon = item.icon;
-              return (
-                <div key={item.label} className="bg-[#161b22] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
+              const inner = (
+                <>
                   <div
                     className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ background: `${item.color}18` }}
@@ -220,6 +220,17 @@ export default function ContactPage() {
                     <p className="text-xs text-[#8ba3c7] mb-0.5">{item.label}</p>
                     <p className="text-[#e6f0ff] font-medium text-sm">{item.value}</p>
                   </div>
+                </>
+              );
+              return "href" in item ? (
+                <a key={item.label} href={(item as {href:string}).href} target="_blank" rel="noopener noreferrer"
+                   className="bg-[#161b22] border border-white/5 rounded-2xl p-4 flex items-start gap-3
+                              hover:border-[#00d4aa]/20 transition-colors">
+                  {inner}
+                </a>
+              ) : (
+                <div key={item.label} className="bg-[#161b22] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
+                  {inner}
                 </div>
               );
             })}

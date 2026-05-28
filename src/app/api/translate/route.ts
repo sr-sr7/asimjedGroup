@@ -1,40 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
+import { allow, clientIp } from "@/lib/rateLimit";
 
-/**
- * Translates text via the unofficial Google Translate GTX endpoint.
- * Called server-side so there are no CORS issues.
- */
 async function gtx(text: string): Promise<string> {
   if (!text?.trim()) return text;
 
   const url = new URL("https://translate.googleapis.com/translate_a/single");
   url.searchParams.set("client", "gtx");
-  url.searchParams.set("sl", "auto"); // auto-detect source
+  url.searchParams.set("sl", "auto");
   url.searchParams.set("tl", "ar");
   url.searchParams.set("dt", "t");
   url.searchParams.set("q", text);
 
   const res = await fetch(url.toString(), {
     signal: AbortSignal.timeout(8000),
-    headers: {
-      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
-    },
+    headers: { "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" },
   });
 
   if (!res.ok) throw new Error(`GTX HTTP ${res.status}`);
 
-  // Response shape: [ [ ["translated","original",...], ... ], null, "en", ... ]
   const data = (await res.json()) as [[string, string][]][];
-  const translated = data[0]
-    .map((pair) => pair[0])
-    .filter(Boolean)
-    .join("")
-    .trim();
-
-  return translated || text;
+  return data[0].map((p) => p[0]).filter(Boolean).join("").trim() || text;
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 10 requests per minute per IP
+  const ip = clientIp(req);
+  if (!allow(ip, "translate", 10, 60 * 1000)) {
+    return NextResponse.json({ error: "rate limit exceeded" }, { status: 429 });
+  }
+
   try {
     const body = await req.json() as { texts?: string[] };
     const texts = body.texts;
@@ -43,16 +37,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ translations: [] });
     }
 
-    // Translate in parallel — cap at 60 items just in case
     const results = await Promise.allSettled(
       texts.slice(0, 60).map((t) => gtx(t))
     );
 
-    const translations = results.map((r, i) =>
-      r.status === "fulfilled" ? r.value : texts[i]
-    );
-
-    return NextResponse.json({ translations });
+    return NextResponse.json({
+      translations: results.map((r, i) =>
+        r.status === "fulfilled" ? r.value : texts[i]
+      ),
+    });
   } catch (err) {
     console.error("Translate API error:", err);
     return NextResponse.json({ error: "translation failed" }, { status: 500 });
