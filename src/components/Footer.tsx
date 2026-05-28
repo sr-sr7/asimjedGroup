@@ -58,18 +58,15 @@ export default function Footer() {
 
         {/* وثيقة العمل الحر */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
-          <a
-            href="https://freelancers.sa"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 px-5 py-3 rounded-xl border border-[#00d4aa]/20 bg-[#00d4aa]/5 hover:border-[#00d4aa]/50 hover:bg-[#00d4aa]/10 transition-all group"
+          <div
+            className="flex items-center gap-3 px-5 py-3 rounded-xl border border-[#00d4aa]/20 bg-[#00d4aa]/5"
           >
             {/* أيقونة الشهادة */}
             <div className="w-8 h-8 rounded-lg bg-[#00d4aa]/10 flex items-center justify-center text-[#00d4aa] text-base flex-shrink-0">
               ✓
             </div>
             <div className="text-right">
-              <div className="text-[#e6f0ff] text-xs font-bold group-hover:text-[#00d4aa] transition-colors">
+              <div className="text-[#e6f0ff] text-xs font-bold">
                 مرخص من وزارة الموارد البشرية
               </div>
               <div className="text-[#8ba3c7] text-[10px] mt-0.5">
@@ -79,7 +76,7 @@ export default function Footer() {
                 صالحة حتى: أغسطس 2026
               </div>
             </div>
-          </a>
+          </div>
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-[#8ba3c7] text-xs">
