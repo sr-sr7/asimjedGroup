@@ -186,6 +186,29 @@ export default function ContactPage() {
                 </div>
               );
             })}
+
+
+            {/* وثيقة العمل الحر */}
+            <a
+              href="https://freelancers.sa"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#161b22] border border-[#00d4aa]/20 rounded-2xl p-4 flex items-start gap-3 hover:border-[#00d4aa]/50 hover:bg-[#00d4aa]/5 transition-all group"
+            >
+              <div className="w-9 h-9 rounded-xl bg-[#00d4aa]/10 flex items-center justify-center flex-shrink-0 text-[#00d4aa] font-bold text-sm">
+                ✓
+              </div>
+              <div>
+                <p className="text-[#e6f0ff] font-bold text-xs group-hover:text-[#00d4aa] transition-colors">
+                  مرخص من وزارة الموارد البشرية
+                </p>
+                <p className="text-[#8ba3c7] text-[10px] mt-0.5">
+                  وثيقة ممارس حر · رقم الوثيقة:{" "}
+                  <span className="text-[#00d4aa] font-mono">FL-270754426</span>
+                </p>
+                <p className="text-[#8ba3c7] text-[10px]">صالحة حتى: أغسطس 2026</p>
+              </div>
+            </a>
           </div>
         </div>
 
