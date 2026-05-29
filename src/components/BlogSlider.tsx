@@ -71,6 +71,8 @@ function SlideCard({
           {article.cover_image ? (
             <>
               <img src={article.cover_image} alt={title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#161b22]/70 to-transparent" />
             </>
@@ -96,11 +98,13 @@ function SlideCard({
             {title}
           </h3>
           {desc && (
-            <p className="text-[#6b82a0] text-xs leading-relaxed line-clamp-2">{desc}</p>
+            <p className="text-[#8ba3c7] text-xs leading-relaxed line-clamp-2">{desc}</p>
           )}
-          <div className="flex items-center justify-between pt-1 mt-auto text-[10px] text-[#4d6080]">
+          <div className="flex items-center justify-between pt-1 mt-auto text-[10px] text-[#7090ae]">
             <span className="flex items-center gap-1.5 max-w-[55%]">
               <img src={article.user.profile_image} alt={article.user.name}
+                loading="lazy"
+                decoding="async"
                 className="w-4 h-4 rounded-full ring-1 ring-white/10 flex-shrink-0" />
               <span className="truncate">{article.user.name}</span>
             </span>
@@ -118,15 +122,17 @@ function SlideCard({
 
 /* ─── Arrow Button ───────────────────────────────────────── */
 function ArrowBtn({
-  onClick, disabled, children, side,
+  onClick, disabled, children, side, ariaLabel,
 }: {
   onClick: () => void;
   disabled: boolean;
   children: React.ReactNode;
   side: "left" | "right";
+  ariaLabel: string;
 }) {
   return (
     <button
+      aria-label={ariaLabel}
       onClick={onClick}
       disabled={disabled}
       className={`
@@ -298,7 +304,7 @@ export default function BlogSlider({ articles }: { articles: DevArticle[] }) {
                         bg-gradient-to-r from-[#0d1117] via-[#0d1117]/60 to-transparent" />
 
         {/* ← Prev */}
-        <ArrowBtn onClick={() => navigate("prev")} disabled={!canPrev} side="left">
+        <ArrowBtn onClick={() => navigate("prev")} disabled={!canPrev} side="left" ariaLabel="المقال السابق">
           <ChevronRight size={20} />
         </ArrowBtn>
 
@@ -326,7 +332,7 @@ export default function BlogSlider({ articles }: { articles: DevArticle[] }) {
                         bg-gradient-to-l from-[#0d1117] via-[#0d1117]/60 to-transparent" />
 
         {/* → Next */}
-        <ArrowBtn onClick={() => navigate("next")} disabled={!canNext} side="right">
+        <ArrowBtn onClick={() => navigate("next")} disabled={!canNext} side="right" ariaLabel="المقال التالي">
           <ChevronLeft size={20} />
         </ArrowBtn>
       </div>

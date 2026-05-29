@@ -34,7 +34,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="AsiMjed" width={40} height={40} className="rounded-lg" />
+          <Image src="/logo.png" alt="شعار AsiMjed" width={40} height={40} className="rounded-lg" />
           <span
             className="font-orbitron font-black text-lg grad-text"
             style={{ fontFamily: "Orbitron, sans-serif" }}
@@ -65,6 +65,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
+          aria-label={open ? "إغلاق القائمة" : "فتح القائمة"}
           className="md:hidden text-[#8ba3c7] hover:text-[#00d4aa] transition-colors"
           onClick={() => setOpen(!open)}
         >

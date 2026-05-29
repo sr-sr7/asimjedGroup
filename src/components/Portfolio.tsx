@@ -249,6 +249,7 @@ export default function Portfolio() {
         <div className="flex items-center justify-center gap-4 md:gap-6 mt-6 md:mt-8">
           {/* Arrow right (السابق في RTL) */}
           <button
+            aria-label="المشروع السابق"
             onClick={prev}
             disabled={!canPrev}
             className="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center border transition-all duration-200"
@@ -267,6 +268,7 @@ export default function Portfolio() {
             {Array.from({ length: maxIndex + 1 }).map((_, i) => (
               <button
                 key={i}
+                aria-label={`عرض الشريحة ${i + 1}`}
                 onClick={() => setIndex(i)}
                 className="rounded-full transition-all duration-300"
                 style={{
@@ -283,6 +285,7 @@ export default function Portfolio() {
 
           {/* Arrow left (التالي في RTL) */}
           <button
+            aria-label="المشروع التالي"
             onClick={next}
             disabled={!canNext}
             className="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center border transition-all duration-200"

@@ -81,7 +81,7 @@ export default function Testimonials() {
                 </div>
                 <div>
                   <p className="text-[#e6f0ff] font-bold text-sm">{r.name}</p>
-                  <p className="text-[#4d6080] text-xs">{r.role}</p>
+                  <p className="text-[#8ba3c7] text-xs">{r.role}</p>
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@ export default function Testimonials() {
         </div>
 
         {/* Trust bar */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-[#4d6080] text-xs">
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-[#8ba3c7] text-xs">
           {[
             { num: "50+",  label: "مشروع مكتمل" },
             { num: "100%", label: "رضا العملاء" },

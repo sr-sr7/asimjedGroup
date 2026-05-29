@@ -3,11 +3,11 @@ import type { NextConfig } from "next";
 const cspValue = [
   "default-src 'self'",
   // Next.js needs unsafe-inline for runtime chunks; nonce approach requires middleware
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://va.vercel-scripts.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://va.vercel-scripts.com https://www.clarity.ms https://c.clarity.ms",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
   "img-src 'self' data: blob: https:",
-  "connect-src 'self' https://dev.to https://*.supabase.co https://translate.googleapis.com https://vitals.vercel-insights.com https://*.vercel-analytics.com https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com/recaptcha/",
+  "connect-src 'self' https://dev.to https://*.supabase.co https://translate.googleapis.com https://vitals.vercel-insights.com https://*.vercel-analytics.com https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com/recaptcha/ https://www.clarity.ms https://c.clarity.ms https://e.clarity.ms",
   "frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com",
   "object-src 'none'",
   "base-uri 'self'",
@@ -31,6 +31,8 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
   // DNS prefetch for performance
   { key: "X-DNS-Prefetch-Control", value: "on" },
+  // Cross-Origin Opener Policy — prevents cross-origin window access
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
 ];
 
 const nextConfig: NextConfig = {
