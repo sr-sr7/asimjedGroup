@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { ExternalLink, Github, Search } from "lucide-react";
+import { MessageSquare, Search } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -175,13 +175,14 @@ export default function PortfolioPage() {
                     {p.title[0]}
                   </div>
                 </div>
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-                  <button className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center text-white hover:bg-[#00d4aa] transition-colors">
-                    <ExternalLink size={16} />
-                  </button>
-                  <button className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center text-white hover:bg-[#3a7bd5] transition-colors">
-                    <Github size={16} />
-                  </button>
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <Link
+                    href="/contact"
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#00d4aa] text-[#0d1117] text-xs font-bold hover:scale-105 transition-transform"
+                  >
+                    <MessageSquare size={13} />
+                    اطلب مشروعاً مشابهاً
+                  </Link>
                 </div>
                 <span
                   className="absolute top-3 left-3 text-[10px] px-2 py-1 rounded-lg font-bold"

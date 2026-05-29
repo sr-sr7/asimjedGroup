@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowLeft, Play } from "lucide-react";
 
 export default function Hero() {
@@ -125,6 +126,12 @@ export default function Hero() {
             <Play size={16} />
             استعرض أعمالنا
           </a>
+          <Link
+            href="/about"
+            className="flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-[#8ba3c7] text-base border border-white/5 bg-transparent transition-all duration-300 hover:border-[#00d4aa]/30 hover:text-[#00d4aa]"
+          >
+            من نحن
+          </Link>
         </div>
 
         {/* Stats */}
