@@ -31,16 +31,22 @@ export default function ContactPage() {
       let recaptchaToken = "";
       if (RECAPTCHA_KEY && typeof window !== "undefined" && window.grecaptcha) {
         try {
-          recaptchaToken = await new Promise<string>((resolve, reject) => {
-            window.grecaptcha.ready(() => {
-              window.grecaptcha
-                .execute(RECAPTCHA_KEY, { action: "contact" })
-                .then(resolve)
-                .catch(reject);
-            });
-          });
+          // نضيف timeout 3 ثوانٍ: لو execute() علقت بدون resolve/reject نكمل بدونها
+          recaptchaToken = await Promise.race([
+            new Promise<string>((resolve, reject) => {
+              window.grecaptcha.ready(() => {
+                window.grecaptcha
+                  .execute(RECAPTCHA_KEY, { action: "contact" })
+                  .then(resolve)
+                  .catch(reject);
+              });
+            }),
+            new Promise<never>((_, reject) =>
+              setTimeout(() => reject(new Error("reCAPTCHA timeout")), 3000)
+            ),
+          ]);
         } catch {
-          // reCAPTCHA غير متاح أو مفتاح غير صالح — نكمل بدون token
+          // reCAPTCHA غير متاح أو مفتاح غير صالح أو timeout — نكمل بدون token
           console.warn("reCAPTCHA unavailable, submitting without token");
         }
       }
