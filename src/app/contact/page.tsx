@@ -27,15 +27,22 @@ export default function ContactPage() {
     e.preventDefault();
     setStatus("sending");
     try {
-      // احصل على reCAPTCHA token لو المفتاح موجود
+      // احصل على reCAPTCHA token — لو فشل نكمّل بدونه (الـ API تقبله)
       let recaptchaToken = "";
       if (RECAPTCHA_KEY && typeof window !== "undefined" && window.grecaptcha) {
-        recaptchaToken = await new Promise<string>((resolve) => {
-          window.grecaptcha.ready(async () => {
-            const token = await window.grecaptcha.execute(RECAPTCHA_KEY, { action: "contact" });
-            resolve(token);
+        try {
+          recaptchaToken = await new Promise<string>((resolve, reject) => {
+            window.grecaptcha.ready(() => {
+              window.grecaptcha
+                .execute(RECAPTCHA_KEY, { action: "contact" })
+                .then(resolve)
+                .catch(reject);
+            });
           });
-        });
+        } catch {
+          // reCAPTCHA غير متاح أو مفتاح غير صالح — نكمل بدون token
+          console.warn("reCAPTCHA unavailable, submitting without token");
+        }
       }
 
       const res = await fetch("/api/contact", {
