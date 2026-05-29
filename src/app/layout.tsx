@@ -55,6 +55,16 @@ export const metadata: Metadata = {
   verification: {
     google: "NaRTG_s6aHMcfcXibT2JMCyjSCe3qqlsVTX_Z3Mj5TQ",
   },
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+    shortcut: "/logo.png",
+  },
+  manifest: "/manifest.webmanifest",
+  other: {
+    "theme-color": "#00d4aa",
+    "msapplication-TileColor": "#0d1117",
+  },
 };
 
 const jsonLd = {
