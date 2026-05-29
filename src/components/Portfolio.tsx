@@ -264,22 +264,27 @@ export default function Portfolio() {
           </button>
 
           {/* Dots */}
-          <div className="flex gap-1.5 sm:gap-2 items-center">
+          <div className="flex gap-0.5 sm:gap-1 items-center">
             {Array.from({ length: maxIndex + 1 }).map((_, i) => (
               <button
                 key={i}
                 aria-label={`عرض الشريحة ${i + 1}`}
                 onClick={() => setIndex(i)}
-                className="rounded-full transition-all duration-300"
-                style={{
-                  width: i === index ? "20px" : "7px",
-                  height: "7px",
-                  background:
-                    i === index
-                      ? "linear-gradient(135deg,#00d4aa,#3a7bd5)"
-                      : "rgba(255,255,255,0.15)",
-                }}
-              />
+                className="flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                style={{ minWidth: "24px", minHeight: "24px", background: "transparent", border: "none", padding: 0 }}
+              >
+                <span
+                  className="rounded-full transition-all duration-300 block"
+                  style={{
+                    width: i === index ? "20px" : "7px",
+                    height: "7px",
+                    background:
+                      i === index
+                        ? "linear-gradient(135deg,#00d4aa,#3a7bd5)"
+                        : "rgba(255,255,255,0.15)",
+                  }}
+                />
+              </button>
             ))}
           </div>
 
