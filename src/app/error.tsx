@@ -33,7 +33,7 @@ export default function Error({
         {/* Icon */}
         <div
           className="text-7xl md:text-8xl font-black mb-4 select-none"
-          style={{ fontFamily: "Orbitron, sans-serif", color: "#ff6b6b" }}
+          style={{ fontFamily: "var(--font-orbitron), sans-serif", color: "#ff6b6b" }}
         >
           ⚠
         </div>

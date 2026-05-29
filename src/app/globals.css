@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Orbitron:wght@700;900&display=swap');
-
 :root {
   --teal: #00d4aa;
   --blue: #3a7bd5;
@@ -29,7 +27,7 @@ html {
 body {
   background: var(--dark);
   color: var(--text);
-  font-family: 'Tajawal', sans-serif;
+  font-family: var(--font-tajawal), sans-serif;
   direction: rtl;
   min-height: 100vh;
   overflow-x: hidden;

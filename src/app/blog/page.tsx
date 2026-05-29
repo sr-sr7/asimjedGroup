@@ -61,7 +61,7 @@ export default async function BlogPage() {
           <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-3">المعرفة</p>
           <h1
             className="grad-text font-black mb-4"
-            style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(2rem,5vw,3.2rem)" }}
+            style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(2rem,5vw,3.2rem)" }}
           >
             المدونة
           </h1>

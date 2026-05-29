@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
           <Image src="/logo.png" alt="AsiMjed" width={56} height={56} className="rounded-xl mx-auto mb-4" />
           <h1
             className="grad-text font-black text-2xl"
-            style={{ fontFamily: "Orbitron, sans-serif" }}
+            style={{ fontFamily: "var(--font-orbitron), sans-serif" }}
           >
             لوحة التحكم
           </h1>

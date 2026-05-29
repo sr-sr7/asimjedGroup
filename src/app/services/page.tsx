@@ -136,7 +136,7 @@ export default function ServicesPage() {
           <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-3">ما نقدمه</p>
           <h1
             className="grad-text font-black mb-4"
-            style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(2rem,5vw,3.2rem)" }}
+            style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(2rem,5vw,3.2rem)" }}
           >
             خدماتنا والأسعار
           </h1>

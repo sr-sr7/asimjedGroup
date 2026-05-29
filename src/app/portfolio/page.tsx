@@ -112,7 +112,7 @@ export default function PortfolioPage() {
           <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-3">ما أنجزناه</p>
           <h1
             className="grad-text font-black mb-4"
-            style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(2rem,5vw,3.2rem)" }}
+            style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(2rem,5vw,3.2rem)" }}
           >
             معرض أعمالنا
           </h1>
@@ -170,7 +170,7 @@ export default function PortfolioPage() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div
                     className="w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl opacity-60"
-                    style={{ background: `${p.color}22`, color: p.color, fontFamily: "Orbitron, sans-serif" }}
+                    style={{ background: `${p.color}22`, color: p.color, fontFamily: "var(--font-orbitron), sans-serif" }}
                   >
                     {p.title[0]}
                   </div>

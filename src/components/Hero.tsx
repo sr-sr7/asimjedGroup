@@ -68,7 +68,7 @@ export default function Hero() {
         <h1
           className="grad-text font-black tracking-widest mb-3"
           style={{
-            fontFamily: "Orbitron, sans-serif",
+            fontFamily: "var(--font-orbitron), sans-serif",
             fontSize: "clamp(2.4rem,8vw,4.5rem)",
             animation: "fadeUp .8s .15s ease both",
             opacity: 0,
@@ -147,7 +147,7 @@ export default function Hero() {
             <div key={s.label} className="text-center">
               <div
                 className="grad-text font-black text-3xl"
-                style={{ fontFamily: "Orbitron, sans-serif" }}
+                style={{ fontFamily: "var(--font-orbitron), sans-serif" }}
               >
                 {s.value}
               </div>

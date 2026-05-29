@@ -89,7 +89,7 @@ function FeaturedCard({
               style={{ background: `radial-gradient(circle at 30% 50%, ${color}22, transparent 60%), #1f2937` }}>
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="text-6xl font-black opacity-20"
-                  style={{ fontFamily: "Orbitron, sans-serif", color }}>
+                  style={{ fontFamily: "var(--font-orbitron), sans-serif", color }}>
                   {article.title.charAt(0).toUpperCase()}
                 </span>
               </div>
@@ -161,7 +161,7 @@ function ArticleCard({
               style={{ background: `radial-gradient(circle at 40% 40%, ${color}22, transparent 60%), #1f2937` }}>
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="text-3xl font-black opacity-20"
-                  style={{ fontFamily: "Orbitron, sans-serif", color }}>
+                  style={{ fontFamily: "var(--font-orbitron), sans-serif", color }}>
                   {article.title.charAt(0).toUpperCase()}
                 </span>
               </div>

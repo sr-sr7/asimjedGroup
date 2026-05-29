@@ -37,7 +37,7 @@ export default function Navbar() {
           <Image src="/logo.png" alt="شعار AsiMjed" width={40} height={40} className="rounded-lg" />
           <span
             className="font-orbitron font-black text-lg grad-text"
-            style={{ fontFamily: "Orbitron, sans-serif" }}
+            style={{ fontFamily: "var(--font-orbitron), sans-serif" }}
           >
             AsiMjed
           </span>

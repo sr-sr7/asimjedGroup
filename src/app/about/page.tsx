@@ -67,7 +67,7 @@ export default function AboutPage() {
               <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-3">من نحن</p>
               <h1
                 className="grad-text font-black mb-6 leading-tight"
-                style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(1.8rem,4vw,2.8rem)" }}
+                style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(1.8rem,4vw,2.8rem)" }}
               >
                 نبني تجارب رقمية تُحدث فرقاً
               </h1>
@@ -107,7 +107,7 @@ export default function AboutPage() {
 
                 {/* Avatar */}
                 <div className="w-20 h-20 rounded-2xl mx-auto mb-4 flex items-center justify-center font-black text-3xl relative z-10"
-                  style={{ background: "linear-gradient(135deg,#00d4aa22,#3a7bd522)", color: "#00d4aa", fontFamily: "Orbitron, sans-serif" }}>
+                  style={{ background: "linear-gradient(135deg,#00d4aa22,#3a7bd522)", color: "#00d4aa", fontFamily: "var(--font-orbitron), sans-serif" }}>
                   A
                 </div>
 
@@ -152,7 +152,7 @@ export default function AboutPage() {
         <section className="px-6 py-10 max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-3">التقنيات</p>
-            <h2 className="grad-text font-black" style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)" }}>
+            <h2 className="grad-text font-black" style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)" }}>
               مهاراتنا التقنية
             </h2>
           </div>
@@ -178,7 +178,7 @@ export default function AboutPage() {
         <section className="px-6 py-10 max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-3">ما نقدمه</p>
-            <h2 className="grad-text font-black" style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)" }}>
+            <h2 className="grad-text font-black" style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)" }}>
               خدماتنا
             </h2>
           </div>
@@ -200,7 +200,7 @@ export default function AboutPage() {
         <section className="px-6 py-10 max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-3">فلسفتنا</p>
-            <h2 className="grad-text font-black" style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)" }}>
+            <h2 className="grad-text font-black" style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)" }}>
               قيمنا في العمل
             </h2>
           </div>
@@ -224,7 +224,7 @@ export default function AboutPage() {
         <section className="px-6 py-10 max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-3">كيف نعمل</p>
-            <h2 className="grad-text font-black" style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)" }}>
+            <h2 className="grad-text font-black" style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)" }}>
               خطوات العمل
             </h2>
           </div>
@@ -235,7 +235,7 @@ export default function AboutPage() {
                 {i < steps.length - 1 && (
                   <div className="hidden lg:block absolute top-8 -left-2 w-4 h-px bg-gradient-to-l from-[#00d4aa]/30 to-transparent z-10" />
                 )}
-                <p className="text-4xl font-black mb-3 opacity-20" style={{ fontFamily: "Orbitron, sans-serif", color: "#00d4aa" }}>{s.n}</p>
+                <p className="text-4xl font-black mb-3 opacity-20" style={{ fontFamily: "var(--font-orbitron), sans-serif", color: "#00d4aa" }}>{s.n}</p>
                 <h3 className="text-[#e6f0ff] font-bold text-sm mb-2">{s.title}</h3>
                 <p className="text-[#8ba3c7] text-xs leading-relaxed">{s.desc}</p>
               </div>
@@ -274,7 +274,7 @@ export default function AboutPage() {
             <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-3 relative z-10">الخطوة التالية</p>
             <h2
               className="grad-text font-black mb-4 relative z-10"
-              style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(1.4rem,3vw,2rem)" }}
+              style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(1.4rem,3vw,2rem)" }}
             >
               هل أنت مستعد لبدء مشروعك؟
             </h2>

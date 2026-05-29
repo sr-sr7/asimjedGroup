@@ -15,7 +15,7 @@ export default function PaySuccessPage() {
           </div>
           <h1
             className="grad-text font-black mb-3"
-            style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(1.6rem,4vw,2.4rem)" }}
+            style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(1.6rem,4vw,2.4rem)" }}
           >
             تم الدفع بنجاح!
           </h1>

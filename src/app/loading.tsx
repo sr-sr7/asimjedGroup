@@ -20,7 +20,7 @@ export default function Loading() {
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{
-            fontFamily: "Orbitron, sans-serif",
+            fontFamily: "var(--font-orbitron), sans-serif",
             fontSize: "18px",
             fontWeight: 900,
             background: "linear-gradient(135deg,#00d4aa,#3a7bd5)",

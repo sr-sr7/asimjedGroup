@@ -114,7 +114,7 @@ export default function Portfolio() {
           <h2
             className="grad-text font-black mb-4"
             style={{
-              fontFamily: "Orbitron, sans-serif",
+              fontFamily: "var(--font-orbitron), sans-serif",
               fontSize: "clamp(1.8rem,4vw,2.8rem)",
             }}
           >
@@ -205,7 +205,7 @@ export default function Portfolio() {
                         style={{
                           background: `${p.color}22`,
                           color: p.color,
-                          fontFamily: "Orbitron, sans-serif",
+                          fontFamily: "var(--font-orbitron), sans-serif",
                         }}
                       >
                         {p.title[0]}

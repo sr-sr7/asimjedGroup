@@ -23,7 +23,7 @@ export default function Footer() {
             <div>
               <div
                 className="grad-text font-black text-lg"
-                style={{ fontFamily: "Orbitron, sans-serif" }}
+                style={{ fontFamily: "var(--font-orbitron), sans-serif" }}
               >
                 AsiMjed
               </div>

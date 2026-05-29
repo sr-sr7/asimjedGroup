@@ -78,7 +78,7 @@ export default function AdminPage() {
       <aside className="w-56 border-l border-white/5 bg-[#161b22] flex flex-col py-6 px-4 fixed h-full">
         <div className="flex items-center gap-2 mb-8 px-2">
           <Image src="/logo.png" alt="AsiMjed" width={32} height={32} className="rounded-lg" />
-          <span className="font-black text-sm grad-text" style={{ fontFamily: "Orbitron, sans-serif" }}>Admin</span>
+          <span className="font-black text-sm grad-text" style={{ fontFamily: "var(--font-orbitron), sans-serif" }}>Admin</span>
         </div>
 
         <nav className="flex flex-col gap-1 flex-1">

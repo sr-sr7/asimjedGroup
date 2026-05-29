@@ -1,9 +1,26 @@
 import type { Metadata } from "next";
+import { Tajawal, Orbitron } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import AnalyticsScripts from "@/components/Analytics";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import "./globals.css";
+
+const tajawal = Tajawal({
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "700", "900"],
+  display: "swap",
+  variable: "--font-tajawal",
+  preload: true,
+});
+
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  weight: ["700", "900"],
+  display: "swap",
+  variable: "--font-orbitron",
+  preload: true,
+});
 
 const BASE = "https://www.asimjed.com";
 
@@ -129,7 +146,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className={`${tajawal.variable} ${orbitron.variable}`}>
       <head>
         <script
           type="application/ld+json"

@@ -357,7 +357,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
         >
           <span
             className="text-7xl font-black opacity-20"
-            style={{ fontFamily: "Orbitron, sans-serif", color: article.color }}
+            style={{ fontFamily: "var(--font-orbitron), sans-serif", color: article.color }}
           >
             {slug.slice(0, 2).toUpperCase()}
           </span>

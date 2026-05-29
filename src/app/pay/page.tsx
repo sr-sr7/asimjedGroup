@@ -18,7 +18,7 @@ export default function PayPage() {
           </p>
           <h1
             className="grad-text font-black mb-4"
-            style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(1.8rem,4vw,2.8rem)" }}
+            style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(1.8rem,4vw,2.8rem)" }}
           >
             الدفع الإلكتروني
           </h1>

@@ -36,7 +36,7 @@ export default function Testimonials() {
           </p>
           <h2
             className="grad-text font-black mb-4"
-            style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(1.8rem,4vw,2.8rem)" }}
+            style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(1.8rem,4vw,2.8rem)" }}
           >
             ماذا يقولون عنّا
           </h2>
@@ -99,7 +99,7 @@ export default function Testimonials() {
             <div key={s.label} className="flex flex-col items-center gap-1">
               <span
                 className="grad-text font-black text-2xl"
-                style={{ fontFamily: "Orbitron, sans-serif" }}
+                style={{ fontFamily: "var(--font-orbitron), sans-serif" }}
               >
                 {s.num}
               </span>

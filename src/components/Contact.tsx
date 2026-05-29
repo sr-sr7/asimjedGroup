@@ -34,7 +34,7 @@ export default function Contact() {
           <h2
             className="grad-text font-black mb-4"
             style={{
-              fontFamily: "Orbitron, sans-serif",
+              fontFamily: "var(--font-orbitron), sans-serif",
               fontSize: "clamp(1.8rem,4vw,2.8rem)",
             }}
           >
@@ -184,7 +184,7 @@ export default function Contact() {
               />
               <p
                 className="grad-text font-black text-sm mb-2 relative z-10"
-                style={{ fontFamily: "Orbitron, sans-serif" }}
+                style={{ fontFamily: "var(--font-orbitron), sans-serif" }}
               >
                 رؤيتنا
               </p>

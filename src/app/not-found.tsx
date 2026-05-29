@@ -34,7 +34,7 @@ export default function NotFound() {
           {/* 404 number */}
           <div
             className="grad-text font-black leading-none mb-4 select-none"
-            style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(6rem,20vw,10rem)" }}
+            style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(6rem,20vw,10rem)" }}
           >
             404
           </div>

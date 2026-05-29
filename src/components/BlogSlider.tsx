@@ -80,7 +80,7 @@ function SlideCard({
             <div className="w-full h-full flex items-center justify-center"
               style={{ background: `radial-gradient(circle at 40% 40%, ${color}20, transparent 65%), #1a2035` }}>
               <span className="text-5xl font-black opacity-15 select-none"
-                style={{ fontFamily: "Orbitron, sans-serif", color }}>
+                style={{ fontFamily: "var(--font-orbitron), sans-serif", color }}>
                 {article.title.charAt(0).toUpperCase()}
               </span>
             </div>
@@ -254,7 +254,7 @@ export default function BlogSlider({ articles }: { articles: DevArticle[] }) {
         <div>
           <p className="text-xs tracking-[5px] uppercase text-[#00d4aa] font-bold mb-1.5">مقالات</p>
           <h2 className="grad-text font-black leading-tight"
-            style={{ fontFamily: "Orbitron, sans-serif", fontSize: "clamp(1.5rem,3vw,2.1rem)" }}>
+            style={{ fontFamily: "var(--font-orbitron), sans-serif", fontSize: "clamp(1.5rem,3vw,2.1rem)" }}>
             من المدونة
           </h2>
           <p className="text-[#8ba3c7] text-sm mt-1.5">
