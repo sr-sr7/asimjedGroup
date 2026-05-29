@@ -39,7 +39,8 @@ export default function Loading() {
         جارٍ التحميل...
       </p>
 
-      <style jsx>{`
+      {/* eslint-disable-next-line react/no-unknown-property */}
+      <style>{`
         @keyframes spin {
           to { transform: rotate(360deg); }
         }
