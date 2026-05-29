@@ -57,11 +57,75 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "AsiMjed",
+  "alternateName": "آسيم جيد",
+  "description": "نصمّم ونطوّر مواقع وتطبيقات احترافية تعكس هوية علامتك التجارية وتحقق أهدافك الرقمية.",
+  "url": "https://www.asimjed.com",
+  "logo": "https://www.asimjed.com/logo.png",
+  "image": "https://www.asimjed.com/og-image.png",
+  "telephone": "+966591088884",
+  "email": "info@asimjed.com",
+  "priceRange": "$$",
+  "currenciesAccepted": "SAR, USD",
+  "paymentAccepted": "Cash, Credit Card, Bank Transfer",
+  "openingHours": "Mo,Tu,We,Th,Su 09:00-18:00",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "SA",
+    "addressRegion": "المملكة العربية السعودية"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 24.7136,
+    "longitude": 46.6753
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Saudi Arabia"
+  },
+  "serviceType": [
+    "تطوير مواقع الويب",
+    "تصميم مواقع الويب",
+    "تطوير تطبيقات الجوال",
+    "متاجر إلكترونية",
+    "تحسين محركات البحث SEO",
+    "هوية بصرية"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "خدمات AsiMjed الرقمية",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "تطوير مواقع Next.js" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "تطوير تطبيقات React Native" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "متاجر إلكترونية" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "تحسين SEO" } }
+    ]
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "Asim Jedaan",
+    "jobTitle": "Full-Stack Developer & UI Designer",
+    "url": "https://www.asimjed.com/about"
+  },
+  "sameAs": [
+    "https://wa.me/966591088884"
+  ]
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
   return (
     <html lang="ar" dir="rtl">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="antialiased">
         {/* GTM noscript fallback */}
         {GTM_ID && (

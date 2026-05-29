@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 
 const links = [
   { label: "الرئيسية", href: "/" },
+  { label: "من نحن", href: "/about" },
   { label: "خدماتنا", href: "/services" },
   { label: "أعمالنا", href: "/portfolio" },
   { label: "المدونة", href: "/blog" },
